@@ -131,6 +131,7 @@ func (c *Coordinator) doScrape(request *http.Request, client *http.Client) {
 	if err = c.doPush(scrapeResp, request, client); err != nil {
 		pushErrorCounter.Inc()
 		level.Warn(logger).Log("msg", "Failed to push scrape response:", "err", err)
+		s.Exit(1)
 		return
 	}
 	level.Info(logger).Log("msg", "Pushed scrape result")
